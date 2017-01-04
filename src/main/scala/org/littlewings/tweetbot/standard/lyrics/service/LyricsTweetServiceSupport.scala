@@ -22,8 +22,6 @@ trait LyricsTweetServiceSupport extends TweetService {
   @Inject
   protected var logger: Logger = _
 
-  protected var twitter: Twitter
-
   protected var lyricsRepository: LyricsRepositorySupport
 
   def autoPickTweet(): Unit = {
@@ -51,9 +49,6 @@ trait LyricsTweetServiceSupport extends TweetService {
       deleteLyrics(key)
       tweet(lyrics)
     }
-
-  protected def tweetTo(message: String): Unit =
-    twitter.updateStatus(message)
 
   protected def pickLyrics(n: Int): (String, Lyrics) =
     lyricsRepository.select(n)

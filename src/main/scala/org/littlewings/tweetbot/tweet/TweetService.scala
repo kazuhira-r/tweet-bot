@@ -1,8 +1,10 @@
 package org.littlewings.tweetbot.tweet
 
-trait TweetService {
-  def tweet(source: TweetSource): Unit =
-    tweetTo(source.format)
+import twitter4j.Twitter
 
-  protected def tweetTo(message: String): Unit
+trait TweetService {
+  protected var twitter: Twitter
+
+  def tweet(source: TweetSource): Unit =
+    twitter.updateStatus(source.format)
 }

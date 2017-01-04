@@ -11,8 +11,5 @@ import twitter4j.Twitter
 class CaratInformationTweetService extends TweetService {
   @CaratInformationTweetBot
   @Inject
-  private[service] var twitter: Twitter = _
-
-  override protected def tweetTo(message: String): Unit =
-    twitter.updateStatus(message)
+  override protected var twitter: Twitter = _
 }
