@@ -20,3 +20,6 @@ target/
 
 # twitter4j settings
 twitter4j.properties
+
+# job-data
+src/main/resources/job-data/

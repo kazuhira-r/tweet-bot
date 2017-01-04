@@ -1,0 +1,11 @@
+language: java
+
+jdk:
+  - oraclejdk8
+
+script: sh unit-test.sh
+
+notifications:
+  on_success: never
+  on_failure: never
+
