@@ -7,12 +7,12 @@ import org.junit.{Before, Test}
 import org.littlewings.tweetbot.application.carat.information.Information
 import org.littlewings.tweetbot.application.carat.information.repository.InformationRepository
 import org.littlewings.tweetbot.test.MockitoScalaBridge._
-import org.littlewings.tweetbot.test.ScalaTestJUnitTestSupport
+import org.littlewings.tweetbot.test.{LoggerInjectSupport, ScalaTestJUnitTestSupport}
 import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
 import org.slf4j.{Logger, LoggerFactory}
 
-class InformationUpdatedSearchServiceTest extends ScalaTestJUnitTestSupport {
+class InformationUpdatedSearchServiceTest extends ScalaTestJUnitTestSupport with LoggerInjectSupport {
   val logger: Logger = LoggerFactory.getLogger(getClass)
   val informationRepositorySpy: InformationRepository = spy(classOf[InformationRepository])
 
@@ -42,7 +42,7 @@ class InformationUpdatedSearchServiceTest extends ScalaTestJUnitTestSupport {
     val informationUpdatedSearchServiceSpy = spy(classOf[InformationUpdatedSearchService])
     doSingleReturn(fixedClock).when(informationUpdatedSearchServiceSpy).clock
 
-    setField(classOf[InformationUpdatedSearchService], informationUpdatedSearchServiceSpy, "logger", logger)
+    injectLogger(informationUpdatedSearchServiceSpy, classOf[InformationUpdatedSearchService])
     informationUpdatedSearchServiceSpy.informationRepository = informationRepositorySpy
 
     val compareInformations = Array(
