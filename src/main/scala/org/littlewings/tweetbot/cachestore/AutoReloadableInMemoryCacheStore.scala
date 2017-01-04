@@ -3,8 +3,11 @@ package org.littlewings.tweetbot.cachestore
 import java.util.concurrent.Executor
 
 import org.infinispan.Cache
+import org.infinispan.container.versioning.NumericVersion
 import org.infinispan.filter.KeyFilter
 import org.infinispan.marshall.core.{MarshalledEntry, MarshalledEntryFactory}
+import org.infinispan.metadata.EmbeddedMetadata
+import org.infinispan.metadata.impl.InternalMetadataImpl
 import org.infinispan.persistence.spi.AdvancedCacheLoader.CacheLoaderTask
 import org.infinispan.persistence.spi.AdvancedCacheWriter.PurgeListener
 import org.infinispan.persistence.spi.{AdvancedLoadWriteStore, InitializationContext}
@@ -37,10 +40,14 @@ trait AutoReloadableInMemoryCacheStore[K, V] extends AdvancedLoadWriteStore[K, V
     val marshalledEntryFactory =
       context.getMarshalledEntryFactory.asInstanceOf[MarshalledEntryFactory[K, V]]
 
+    val metadata = new EmbeddedMetadata.Builder().version(new NumericVersion(1L)).build
+    val now = System.currentTimeMillis
+    val (created, lastUsed) = (now, now)
+
     internalStore
       .get(key.asInstanceOf[K])
-      .map(value => marshalledEntryFactory.newMarshalledEntry(key, value, null))
-      .getOrElse(null)
+      .map(value => marshalledEntryFactory.newMarshalledEntry(key, value, new InternalMetadataImpl(metadata, created, lastUsed)))
+      .orNull
   }
 
   override def contains(key: AnyRef): Boolean = internalStore.get(key.asInstanceOf[K]).isDefined
