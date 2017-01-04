@@ -8,9 +8,9 @@ import org.infinispan.manager.{DefaultCacheManager, EmbeddedCacheManager}
 import org.junit.Test
 import org.littlewings.tweetbot.resource.Managed
 import org.littlewings.tweetbot.standard.lyrics.Lyrics
-import org.littlewings.tweetbot.test.ScalaTestJUnitTestSupport
+import org.littlewings.tweetbot.test.{CacheTestSupport, ScalaTestJUnitTestSupport}
 
-class LyricsCacheStoreTest extends ScalaTestJUnitTestSupport {
+class LyricsCacheStoreTest extends ScalaTestJUnitTestSupport with CacheTestSupport {
   private[cachestore] def withCacheManager(fun: EmbeddedCacheManager => Unit): Unit = {
     val configurationBuilder = new GlobalConfigurationBuilder
     configurationBuilder
@@ -27,44 +27,44 @@ class LyricsCacheStoreTest extends ScalaTestJUnitTestSupport {
   }
 
   @Test
-  def cacheStoreConfiguration(): Unit =
-    withCacheManager { cacheManager =>
-      val cacheConfiguration = new ConfigurationBuilder
-      cacheConfiguration
-        .persistence
-        .addStore(classOf[LyricsCacheStoreConfigurationBuilder])
-        .addProperty("artistNameAlias", "singer")
+  def cacheStoreConfiguration(): Unit = {
+    val cacheConfiguration = new ConfigurationBuilder
+    cacheConfiguration
+      .persistence
+      .addStore(classOf[LyricsCacheStoreConfigurationBuilder])
+      .addProperty("artistNameAlias", "singer")
 
-      cacheManager.defineConfiguration("singerLyricsCache", cacheConfiguration.build)
+    val cacheManager = getCacheManager
+    cacheManager.defineConfiguration("singerLyricsCache", cacheConfiguration.build)
 
-      val cache = cacheManager.getCache[String, Lyrics]("singerLyricsCache")
+    val cache = cacheManager.getCache[String, Lyrics]("singerLyricsCache")
 
-      cache should have size 8
-    }
+    cache should have size 8
+  }
 
   @Test
-  def reloadCacheStore(): Unit =
-    withCacheManager { cacheManager =>
-      val cacheConfiguration = new ConfigurationBuilder
-      cacheConfiguration
-        .persistence
-        .addStore(classOf[LyricsCacheStoreConfigurationBuilder])
-        .addProperty("artistNameAlias", "singer")
+  def reloadCacheStore(): Unit = {
+    val cacheConfiguration = new ConfigurationBuilder
+    cacheConfiguration
+      .persistence
+      .addStore(classOf[LyricsCacheStoreConfigurationBuilder])
+      .addProperty("artistNameAlias", "singer")
 
-      cacheManager.defineConfiguration("singerLyricsCache", cacheConfiguration.build)
+    val cacheManager = getCacheManager
+    cacheManager.defineConfiguration("singerLyricsCache", cacheConfiguration.build)
 
-      val cache = cacheManager.getCache[String, Lyrics]("singerLyricsCache")
+    val cache = cacheManager.getCache[String, Lyrics]("singerLyricsCache")
 
-      cache should have size (8)
+    cache should have size 8
 
-      val stream =
-        for (s <- Managed(cache.keySet.stream))
-          yield s.collect(Collectors.toList[String])
+    val stream =
+      for (s <- Managed(cache.keySet.stream))
+        yield s.collect(Collectors.toList[String])
 
-      val keys = stream.acquireAndGet(identity)
+    val keys = stream.acquireAndGet(identity)
 
-      keys.forEach(k => cache.remove(k))
+    keys.forEach(k => cache.remove(k))
 
-      cache should have size (8)
-    }
+    cache should have size 8
+  }
 }

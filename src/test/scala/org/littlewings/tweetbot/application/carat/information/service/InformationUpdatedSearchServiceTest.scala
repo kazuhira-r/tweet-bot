@@ -2,38 +2,36 @@ package org.littlewings.tweetbot.application.carat.information.service
 
 import java.time.format.DateTimeFormatter
 import java.time.{Clock, LocalDate, ZoneId, ZonedDateTime}
-import javax.inject.Inject
 
-import org.apache.deltaspike.testcontrol.api.mock.DynamicMockManager
 import org.junit.{Before, Test}
 import org.littlewings.tweetbot.application.carat.information.Information
 import org.littlewings.tweetbot.application.carat.information.repository.InformationRepository
-import org.littlewings.tweetbot.test.CdiTestRunnerTestSupport
+import org.littlewings.tweetbot.test.MockitoScalaBridge._
+import org.littlewings.tweetbot.test.ScalaTestJUnitTestSupport
+import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
+import org.slf4j.{Logger, LoggerFactory}
 
-class InformationUpdatedSearchServiceTest extends CdiTestRunnerTestSupport {
-  @Inject
-  var mockManager: DynamicMockManager = _
-
-  @Inject
-  var informationUpdatedSearchService: InformationUpdatedSearchService = _
-
-  @Inject
-  var informationRepository: InformationRepository = _
+class InformationUpdatedSearchServiceTest extends ScalaTestJUnitTestSupport {
+  val logger: Logger = LoggerFactory.getLogger(getClass)
+  val informationRepositorySpy: InformationRepository = spy(classOf[InformationRepository])
 
   @Before
   def setUp(): Unit = {
-    informationRepository.clear()
-
     val initialData = Array(
-      Information(LocalDate.of(2016, 8, 20), "http://www.carat-ue.jp/#media", "MEDIA 更新"),
-      Information(LocalDate.of(2016, 8, 19), "http://www.carat-ue.jp/#media", "MEDIA 更新"),
-      Information(LocalDate.of(2016, 8, 18), "http://www.carat-ue.jp/#media", "MEDIA 更新"),
-      Information(LocalDate.of(2016, 8, 8), "http://www.carat-ue.jp/profile.html", "AP 変更"),
-      Information(LocalDate.of(2016, 8, 8), "http://www.carat-ue.jp/#new-release", "NEW RELEASE 更新")
+      Information(LocalDate.of(2016, 8, 20), "http://localhost/#media", "MEDIA 更新"),
+      Information(LocalDate.of(2016, 8, 19), "http://localhost/#media", "MEDIA 更新"),
+      Information(LocalDate.of(2016, 8, 18), "http://localhost/#media", "MEDIA 更新"),
+      Information(LocalDate.of(2016, 8, 8), "http://localhost/profile.html", "AP 変更"),
+      Information(LocalDate.of(2016, 8, 8), "http://localhost/#new-release", "NEW RELEASE 更新")
     )
 
-    informationRepository.saveAll(initialData)
+    doSingleReturn(Vector(initialData))
+      .when(informationRepositorySpy)
+      .findAll
+    doNothing()
+      .when(informationRepositorySpy)
+      .saveAll(any[Seq[Information]])
   }
 
   @Test
@@ -42,33 +40,40 @@ class InformationUpdatedSearchServiceTest extends CdiTestRunnerTestSupport {
     val fixedClock = Clock.fixed(fixedNow.toInstant, ZoneId.of("Asia/Tokyo"))
 
     val informationUpdatedSearchServiceSpy = spy(classOf[InformationUpdatedSearchService])
-    doReturn(fixedClock).when(informationUpdatedSearchServiceSpy).clock
+    doSingleReturn(fixedClock).when(informationUpdatedSearchServiceSpy).clock
 
-    mockManager.addMock(informationUpdatedSearchServiceSpy)
+    setField(classOf[InformationUpdatedSearchService], informationUpdatedSearchServiceSpy, "logger", logger)
+    informationUpdatedSearchServiceSpy.informationRepository = informationRepositorySpy
 
     val compareInformations = Array(
-      Information(LocalDate.of(2016, 8, 25), "http://www.carat-ue.jp/#live", "LIVE＆EVENT 更新"),
-      Information(LocalDate.of(2016, 8, 24), "http://www.carat-ue.jp/#live", "LIVE＆EVENT 更新"),
-      Information(LocalDate.of(2016, 8, 23), "http://www.carat-ue.jp/#live", "LIVE＆EVENT 更新"),
-      Information(LocalDate.of(2016, 8, 22), "http://www.carat-ue.jp/#live", "LIVE＆EVENT 更新"),
-      Information(LocalDate.of(2016, 8, 21), "http://www.carat-ue.jp/#live", "LIVE＆EVENT 更新"),
-      Information(LocalDate.of(2016, 8, 18), "http://www.carat-ue.jp/#media", "MEDIA 更新"),
-      Information(LocalDate.of(2016, 8, 8), "http://www.carat-ue.jp/profile.html", "AP 変更"),
-      Information(LocalDate.of(2016, 8, 8), "http://www.carat-ue.jp/#new-release", "NEW RELEASE 更新")
+      Information(LocalDate.of(2016, 8, 25), "http://localhost/#live", "LIVE＆EVENT 更新"),
+      Information(LocalDate.of(2016, 8, 24), "http://localhost/#live", "LIVE＆EVENT 更新"),
+      Information(LocalDate.of(2016, 8, 23), "http://localhost/#live", "LIVE＆EVENT 更新"),
+      Information(LocalDate.of(2016, 8, 22), "http://localhost/#live", "LIVE＆EVENT 更新"),
+      Information(LocalDate.of(2016, 8, 21), "http://localhost/#live", "LIVE＆EVENT 更新"),
+      Information(LocalDate.of(2016, 8, 18), "http://localhost/#media", "MEDIA 更新"),
+      Information(LocalDate.of(2016, 8, 8), "http://localhost/profile.html", "AP 変更"),
+      Information(LocalDate.of(2016, 8, 8), "http://localhost/#new-release", "NEW RELEASE 更新")
     )
 
     val expected = Array(
-      Information(LocalDate.of(2016, 8, 25), "http://www.carat-ue.jp/#live", "LIVE＆EVENT 更新"),
-      Information(LocalDate.of(2016, 8, 24), "http://www.carat-ue.jp/#live", "LIVE＆EVENT 更新"),
-      Information(LocalDate.of(2016, 8, 23), "http://www.carat-ue.jp/#live", "LIVE＆EVENT 更新"),
-      Information(LocalDate.of(2016, 8, 22), "http://www.carat-ue.jp/#live", "LIVE＆EVENT 更新")
+      Information(LocalDate.of(2016, 8, 25), "http://localhost/#live", "LIVE＆EVENT 更新"),
+      Information(LocalDate.of(2016, 8, 24), "http://localhost/#live", "LIVE＆EVENT 更新"),
+      Information(LocalDate.of(2016, 8, 23), "http://localhost/#live", "LIVE＆EVENT 更新"),
+      Information(LocalDate.of(2016, 8, 22), "http://localhost/#live", "LIVE＆EVENT 更新")
     )
 
-    val newArrivals = informationUpdatedSearchService.findUpdated(compareInformations)
+    val newArrivals = informationUpdatedSearchServiceSpy.findUpdated(compareInformations)
 
-    newArrivals should contain theSameElementsInOrderAs (expected)
+    newArrivals should contain theSameElementsInOrderAs expected
 
     verify(informationUpdatedSearchServiceSpy).clock
   }
 
+  protected[service] def setField(ownerClass: Class[_], owner: AnyRef, fieldName: String, target: AnyRef): Unit = {
+    val field = ownerClass.getDeclaredField(fieldName)
+    field.setAccessible(true)
+
+    field.set(owner, target)
+  }
 }

@@ -17,9 +17,9 @@ class WebSiteInformationExtractService {
   @Inject
   private[service] var caratInformationConfig: CaratInformationConfig = _
 
-  def extract: Seq[Information] = {
-    val webSiteUrl = caratInformationConfig.webSiteUrl
+  private[service] def webSiteUrl: String = caratInformationConfig.webSiteUrl
 
+  def extract: Seq[Information] = {
     val document = loadDocument(webSiteUrl)
 
     val updateDates = document.select("#information dl dt span.f11")
@@ -43,8 +43,8 @@ class WebSiteInformationExtractService {
 
         val revisedDate =
           Array(year,
-            if (month.size < 2) "0" + month else month,
-            if (day.size < 2) "0" + day else day)
+            if (month.length < 2) "0" + month else month,
+            if (day.length < 2) "0" + day else day)
             .mkString(".")
 
         Information(LocalDate.parse(revisedDate, DateTimeFormatter.ofPattern("yyyy.MM.dd")), absoluteLink, content)

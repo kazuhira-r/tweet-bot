@@ -10,5 +10,5 @@ class CaratInformationConfig extends TwitterConfigSupport {
   override protected val config: Config =
     ConfigFactory.load("job-data/carat/information.conf").getConfig("information")
 
-  val webSiteUrl: String = config.getString("website-url")
+  def webSiteUrl: String = config.getString("website-url")
 }
