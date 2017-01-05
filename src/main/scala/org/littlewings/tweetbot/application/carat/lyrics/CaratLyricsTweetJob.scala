@@ -1,7 +1,6 @@
 package org.littlewings.tweetbot.application.carat.lyrics
 
 import javax.enterprise.context.ApplicationScoped
-import javax.enterprise.inject.Typed
 import javax.inject.Inject
 
 import org.apache.deltaspike.scheduler.api.Scheduled
