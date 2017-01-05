@@ -4,16 +4,15 @@ import java.time.format.DateTimeFormatter
 import java.time.{Clock, LocalDate, ZoneId, ZonedDateTime}
 
 import org.junit.{Before, Test}
+import org.littlewings.tweetbot.LoggerSupport
 import org.littlewings.tweetbot.application.carat.information.Information
 import org.littlewings.tweetbot.application.carat.information.repository.InformationRepository
 import org.littlewings.tweetbot.test.MockitoScalaBridge._
-import org.littlewings.tweetbot.test.{LoggerInjectSupport, ScalaTestJUnitTestSupport}
+import org.littlewings.tweetbot.test.ScalaTestJUnitTestSupport
 import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
-import org.slf4j.{Logger, LoggerFactory}
 
-class InformationUpdatedSearchServiceTest extends ScalaTestJUnitTestSupport with LoggerInjectSupport {
-  val logger: Logger = LoggerFactory.getLogger(getClass)
+class InformationUpdatedSearchServiceTest extends ScalaTestJUnitTestSupport with LoggerSupport {
   val informationRepositorySpy: InformationRepository = spy(classOf[InformationRepository])
 
   @Before
@@ -42,7 +41,6 @@ class InformationUpdatedSearchServiceTest extends ScalaTestJUnitTestSupport with
     val informationUpdatedSearchServiceSpy = spy(classOf[InformationUpdatedSearchService])
     doSingleReturn(fixedClock).when(informationUpdatedSearchServiceSpy).clock
 
-    injectLogger(informationUpdatedSearchServiceSpy, classOf[InformationUpdatedSearchService])
     informationUpdatedSearchServiceSpy.informationRepository = informationRepositorySpy
 
     val compareInformations = Array(
@@ -68,12 +66,5 @@ class InformationUpdatedSearchServiceTest extends ScalaTestJUnitTestSupport with
     newArrivals should contain theSameElementsInOrderAs expected
 
     verify(informationUpdatedSearchServiceSpy).clock
-  }
-
-  protected[service] def setField(ownerClass: Class[_], owner: AnyRef, fieldName: String, target: AnyRef): Unit = {
-    val field = ownerClass.getDeclaredField(fieldName)
-    field.setAccessible(true)
-
-    field.set(owner, target)
   }
 }

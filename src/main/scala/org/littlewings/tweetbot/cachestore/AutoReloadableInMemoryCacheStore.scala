@@ -12,11 +12,9 @@ import org.infinispan.persistence.spi.AdvancedCacheLoader.CacheLoaderTask
 import org.infinispan.persistence.spi.AdvancedCacheWriter.PurgeListener
 import org.infinispan.persistence.spi.{AdvancedLoadWriteStore, InitializationContext}
 import org.infinispan.persistence.{PersistenceUtil, TaskContextImpl}
-import org.slf4j.{Logger, LoggerFactory}
+import org.littlewings.tweetbot.LoggerSupport
 
-trait AutoReloadableInMemoryCacheStore[K, V] extends AdvancedLoadWriteStore[K, V] {
-  protected[cachestore] val logger: Logger = LoggerFactory.getLogger(getClass)
-
+trait AutoReloadableInMemoryCacheStore[K, V] extends AdvancedLoadWriteStore[K, V] with LoggerSupport {
   protected val internalStore: scala.collection.mutable.Map[K, V] = scala.collection.mutable.Map.empty
 
   protected var cache: Cache[K, V] = _

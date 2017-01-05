@@ -2,13 +2,11 @@ package org.littlewings.tweetbot.standard.lyrics.service
 
 import java.security.SecureRandom
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
+import org.littlewings.tweetbot.LoggerSupport
 import org.littlewings.tweetbot.standard.lyrics.Lyrics
 import org.littlewings.tweetbot.standard.lyrics.repository.LyricsRepositorySupport
 import org.littlewings.tweetbot.tweet.TweetService
-import org.slf4j.Logger
-import twitter4j.Twitter
 
 import scala.util.{Failure, Random, Success, Try}
 
@@ -18,10 +16,7 @@ object LyricsTweetServiceSupport {
   def nextInt(limit: Int): Int = random.nextInt(limit)
 }
 
-trait LyricsTweetServiceSupport extends TweetService {
-  @Inject
-  protected var logger: Logger = _
-
+trait LyricsTweetServiceSupport extends TweetService with LoggerSupport {
   protected var lyricsRepository: LyricsRepositorySupport
 
   def autoPickTweet(): Unit = {

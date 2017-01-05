@@ -1,6 +1,6 @@
 package org.littlewings.tweetbot.tweet
 
-import org.slf4j.LoggerFactory
+import org.littlewings.tweetbot.LoggerSupport
 import twitter4j.Twitter
 
 object LoggingTwitterFactory {
@@ -9,7 +9,7 @@ object LoggingTwitterFactory {
       .newProxyInstance(getClass.getClassLoader,
         Array(classOf[Twitter]),
         (proxy, method, args) => {
-          val logger = LoggerFactory.getLogger(getClass)
+          val logger = LoggerSupport.loggerFor(getClass)
 
           method.getName match {
             case "updateStatus" =>

@@ -1,10 +1,15 @@
 package org.littlewings.tweetbot
 
-import javax.inject.Inject
+import org.slf4j.{Logger, LoggerFactory}
 
-import org.slf4j.Logger
+object LoggerSupport {
+  def loggerFor(clazz: Class[_]): Logger =
+    if (clazz.getName.contains("$" + "Proxy" + "$"))
+      LoggerFactory.getLogger(clazz.getSuperclass)
+    else
+      LoggerFactory.getLogger(clazz)
+}
 
 trait LoggerSupport {
-  @Inject
-  protected var logger: Logger = _
+  protected val logger: Logger = LoggerSupport.loggerFor(getClass)
 }
