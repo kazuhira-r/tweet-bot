@@ -254,9 +254,6 @@
         <profile>
             <id>slim-packaging</id>
         </profile>
-        <profile>
-            <id>unit-test</id>
-        </profile>
     </profiles>
 
     <build>

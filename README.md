@@ -52,5 +52,5 @@ $ ./swarm-packaging.sh
 
 ### UnitTest
 ```shellscript
-$ ./unit-test.sh
+$ mvn test
 ```
