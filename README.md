@@ -50,7 +50,12 @@ $ ./slim-packaging.sh
 $ ./swarm-packaging.sh
 ```
 
-### UnitTest
+### Unit-Test
 ```shellscript
 $ mvn test
+```
+
+### Integration-Test
+```shellscript
+$ ./integration-test.sh
 ```
