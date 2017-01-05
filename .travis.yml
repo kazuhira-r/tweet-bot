@@ -5,6 +5,11 @@ jdk:
 
 script: sh unit-test.sh
 
+cache:
+  directories:
+  - .autoconf
+  - $HOME/.m2
+
 notifications:
   on_success: never
   on_failure: never
