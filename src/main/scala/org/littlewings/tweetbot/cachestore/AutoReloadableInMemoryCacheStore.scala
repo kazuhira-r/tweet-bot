@@ -6,8 +6,8 @@ import org.infinispan.Cache
 import org.infinispan.container.versioning.NumericVersion
 import org.infinispan.filter.KeyFilter
 import org.infinispan.marshall.core.{MarshalledEntry, MarshalledEntryFactory}
-import org.infinispan.metadata.EmbeddedMetadata
 import org.infinispan.metadata.impl.InternalMetadataImpl
+import org.infinispan.metadata.{EmbeddedMetadata, InternalMetadata}
 import org.infinispan.persistence.spi.AdvancedCacheLoader.CacheLoaderTask
 import org.infinispan.persistence.spi.AdvancedCacheWriter.PurgeListener
 import org.infinispan.persistence.spi.{AdvancedLoadWriteStore, InitializationContext}
@@ -15,7 +15,7 @@ import org.infinispan.persistence.{PersistenceUtil, TaskContextImpl}
 import org.littlewings.tweetbot.LoggerSupport
 
 trait AutoReloadableInMemoryCacheStore[K, V] extends AdvancedLoadWriteStore[K, V] with LoggerSupport {
-  protected val internalStore: scala.collection.mutable.Map[K, V] = scala.collection.mutable.Map.empty
+  protected val internalStore: scala.collection.mutable.Map[K, (V, InternalMetadata)] = scala.collection.mutable.Map.empty
 
   protected var cache: Cache[K, V] = _
 
@@ -44,7 +44,10 @@ trait AutoReloadableInMemoryCacheStore[K, V] extends AdvancedLoadWriteStore[K, V
 
     internalStore
       .get(key.asInstanceOf[K])
-      .map(value => marshalledEntryFactory.newMarshalledEntry(key, value, new InternalMetadataImpl(metadata, created, lastUsed)))
+      .map { valueAndMetadata =>
+        val (value, metadata) = valueAndMetadata
+        marshalledEntryFactory.newMarshalledEntry(key, value, metadata)
+      }
       .orNull
   }
 
@@ -63,13 +66,25 @@ trait AutoReloadableInMemoryCacheStore[K, V] extends AdvancedLoadWriteStore[K, V
   }
 
   protected def triggerReloadCacheStore(): Unit = {
-    internalStore ++= reload
+    val reloadedEntries = reload
+
+    val marshalledEntryFactory =
+      context.getMarshalledEntryFactory.asInstanceOf[MarshalledEntryFactory[K, V]]
+
+    val now = System.currentTimeMillis
+    val (created, lastUsed) = (now, now)
+
+    reloadedEntries.foreach { case (key, value) =>
+      val metadata = new EmbeddedMetadata.Builder().version(new NumericVersion(1L)).build
+      internalStore += key -> (value -> new InternalMetadataImpl(metadata, created, lastUsed))
+    }
+
     logger.info("Store Cache[{}] reloaded, size = {}", cache.getName, internalStore.size)
   }
 
   override def write(entry: MarshalledEntry[_ <: K, _ <: V]): Unit = {
     logger.debug("Store Cache[{}] write entry, key = {}", cache.getName, entry.getKey)
-    internalStore += entry.getKey -> entry.getValue
+    internalStore += entry.getKey -> (entry.getValue -> entry.getMetadata)
   }
 
   override def clear(): Unit = {
