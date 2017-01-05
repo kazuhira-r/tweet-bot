@@ -8,5 +8,5 @@ import org.littlewings.tweetbot.config.TwitterConfigSupport
 @ApplicationScoped
 class LilymyuLyricsConfig extends TwitterConfigSupport {
   override protected val config: Config =
-    ConfigFactory.load("job-data/lilymyu/lyrics.conf").getConfig("artist")
+    ConfigFactory.load("job-data/lilymyu/artist.conf").getConfig("artist")
 }
