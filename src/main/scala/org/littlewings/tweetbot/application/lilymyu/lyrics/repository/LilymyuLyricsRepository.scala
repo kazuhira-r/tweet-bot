@@ -10,8 +10,5 @@ import org.littlewings.tweetbot.standard.lyrics.repository.LyricsRepositorySuppo
 
 @LilymyuLyricsTweetBot
 @ApplicationScoped
-class LilymyuLyricsRepository extends LyricsRepositorySupport {
-  @LilymyuLyricsTweetBot
-  @Inject
-  override protected var cache: Cache[String, Lyrics] = _
-}
+class LilymyuLyricsRepository @Inject()(@LilymyuLyricsTweetBot override protected val cache: Cache[String, Lyrics])
+  extends LyricsRepositorySupport

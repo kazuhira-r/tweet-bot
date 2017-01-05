@@ -5,6 +5,7 @@ import java.time.LocalDate
 import org.jsoup.Jsoup
 import org.junit.Test
 import org.littlewings.tweetbot.application.carat.information.Information
+import org.littlewings.tweetbot.application.carat.information.config.CaratInformationConfig
 import org.littlewings.tweetbot.test.MockitoScalaBridge._
 import org.littlewings.tweetbot.test.{ScalaTestJUnitTestSupport, TestResourceLoader}
 import org.mockito.ArgumentMatchers._
@@ -13,7 +14,7 @@ import org.mockito.Mockito._
 class WebSiteInformationExtractServiceTest extends ScalaTestJUnitTestSupport {
   @Test
   def extractInformations(): Unit = {
-    val webSiteInformationExtractServiceSpy = spy(classOf[WebSiteInformationExtractService])
+    val webSiteInformationExtractServiceSpy = spy(new DefaultWebSiteInformationExtractService(null))
     doSingleReturn(Jsoup.parse(TestResourceLoader.byClass(getClass, getClass.getSimpleName + "_index.html")))
       .when(webSiteInformationExtractServiceSpy)
       .loadDocument(any[String])

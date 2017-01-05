@@ -38,10 +38,8 @@ class InformationUpdatedSearchServiceTest extends ScalaTestJUnitTestSupport with
     val fixedNow = ZonedDateTime.parse("2016-08-23 00:00:00 Asia/Tokyo", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss VV"))
     val fixedClock = Clock.fixed(fixedNow.toInstant, ZoneId.of("Asia/Tokyo"))
 
-    val informationUpdatedSearchServiceSpy = spy(classOf[InformationUpdatedSearchService])
+    val informationUpdatedSearchServiceSpy = spy(new DefaultInformationUpdatedSearchService(informationRepositorySpy))
     doSingleReturn(fixedClock).when(informationUpdatedSearchServiceSpy).clock
-
-    informationUpdatedSearchServiceSpy.informationRepository = informationRepositorySpy
 
     val compareInformations = Array(
       Information(LocalDate.of(2016, 8, 25), "http://localhost/#live", "LIVE＆EVENT 更新"),

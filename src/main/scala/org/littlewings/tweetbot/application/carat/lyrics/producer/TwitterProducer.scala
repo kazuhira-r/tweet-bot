@@ -14,10 +14,8 @@ import twitter4j.{Twitter, TwitterFactory}
 object TwitterProducer {
 
   @Dependent
-  class ActualTwitterProducer extends ProductionStage {
-
-    @Inject
-    private[producer] var caratLyricsConfig: CaratLyricsConfig = _
+  class ActualTwitterProducer @Inject()(private[producer] val caratLyricsConfig: CaratLyricsConfig)
+    extends ProductionStage {
 
     @CaratLyricsTweetBot
     @ApplicationScoped

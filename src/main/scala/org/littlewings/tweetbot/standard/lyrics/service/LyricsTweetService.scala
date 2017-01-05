@@ -5,10 +5,14 @@ import java.util.concurrent.TimeUnit
 
 import org.littlewings.tweetbot.LoggerSupport
 import org.littlewings.tweetbot.standard.lyrics.Lyrics
-import org.littlewings.tweetbot.standard.lyrics.repository.LyricsRepositorySupport
+import org.littlewings.tweetbot.standard.lyrics.repository.LyricsRepository
 import org.littlewings.tweetbot.tweet.TweetService
 
 import scala.util.{Failure, Random, Success, Try}
+
+trait LyricsTweetService extends TweetService {
+  def autoPickTweet(): Unit
+}
 
 object LyricsTweetServiceSupport {
   protected val random: Random = new Random(new SecureRandom)
@@ -16,10 +20,10 @@ object LyricsTweetServiceSupport {
   def nextInt(limit: Int): Int = random.nextInt(limit)
 }
 
-trait LyricsTweetServiceSupport extends TweetService with LoggerSupport {
-  protected var lyricsRepository: LyricsRepositorySupport
+trait LyricsTweetServiceSupport extends LyricsTweetService with LoggerSupport {
+  protected val lyricsRepository: LyricsRepository
 
-  def autoPickTweet(): Unit = {
+  override def autoPickTweet(): Unit = {
     (1 to 3).foldLeft(Try(action())) {
       case (s@Success(_), _) =>
         s

@@ -3,6 +3,7 @@ package org.littlewings.tweetbot.application.carat.information.service
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.enterprise.context.ApplicationScoped
+import javax.enterprise.inject.Typed
 import javax.inject.Inject
 
 import org.jsoup.Jsoup
@@ -12,14 +13,18 @@ import org.littlewings.tweetbot.application.carat.information.config.CaratInform
 
 import scala.collection.JavaConverters._
 
+trait WebSiteInformationExtractService {
+  def extract: Seq[Information]
+}
+
+@Typed(Array(classOf[WebSiteInformationExtractService]))
 @ApplicationScoped
-class WebSiteInformationExtractService {
-  @Inject
-  private[service] var caratInformationConfig: CaratInformationConfig = _
+class DefaultWebSiteInformationExtractService @Inject()(private[service] val caratInformationConfig: CaratInformationConfig)
+  extends WebSiteInformationExtractService {
 
   private[service] def webSiteUrl: String = caratInformationConfig.webSiteUrl
 
-  def extract: Seq[Information] = {
+  override def extract: Seq[Information] = {
     val document = loadDocument(webSiteUrl)
 
     val updateDates = document.select("#information dl dt span.f11")

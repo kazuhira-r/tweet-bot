@@ -6,17 +6,27 @@ import org.infinispan.Cache
 import org.littlewings.tweetbot.resource.Managed
 import org.littlewings.tweetbot.standard.lyrics.Lyrics
 
-trait LyricsRepositorySupport {
-  protected var cache: Cache[String, Lyrics]
+trait LyricsRepository {
+  protected val cache: Cache[String, Lyrics]
 
-  def size: Int = cache.size
+  def size: Int
 
-  def select(n: Int): (String, Lyrics) = {
+  def select(n: Int): (String, Lyrics)
+
+  def delete(key: String): Unit
+}
+
+trait LyricsRepositorySupport extends LyricsRepository {
+  protected val cache: Cache[String, Lyrics]
+
+  override def size: Int = cache.size
+
+  override def select(n: Int): (String, Lyrics) = {
     if (n <= cache.size) {
       val stream =
         for (s <- Managed(cache.entrySet.stream))
           yield s
-            .map[(String, Lyrics)](e => (e.getKey -> e.getValue))
+            .map[(String, Lyrics)](e => e.getKey -> e.getValue)
             .collect(Collectors.toList[(String, Lyrics)])
 
       val entries = stream.acquireAndGet(identity)
@@ -26,5 +36,5 @@ trait LyricsRepositorySupport {
     }
   }
 
-  def delete(key: String): Unit = cache.remove(key)
+  override def delete(key: String): Unit = cache.remove(key)
 }
