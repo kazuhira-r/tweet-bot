@@ -54,8 +54,3 @@ $ ./swarm-packaging.sh
 ```shellscript
 $ mvn test
 ```
-
-### Integration-Test
-```shellscript
-$ ./integration-test.sh
-```
