@@ -37,7 +37,7 @@
 
         <!-- Compile and Runtime libraries version-->
         <infinispan.version>8.2.5.Final</infinispan.version>
-        <jsoup.version>1.10.1</jsoup.version>
+        <jsoup.version>1.10.2</jsoup.version>
         <quartz.version>2.2.3</quartz.version>
         <scala.arm.version>2.0</scala.arm.version>
         <slf4j.version>1.7.22</slf4j.version>
