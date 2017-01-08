@@ -8,9 +8,9 @@ trait TwitterConfigSupport {
   protected val config: Config
   protected def twitter: Config = {
     if (ProjectStageProducer.getInstance.getProjectStage == ProjectStage.Production)
-      config.getConfig("twitter")
+      config.getConfig("twitter").getConfig("production")
     else
-      config.getConfig("twitter").getConfig("development")
+      config.getConfig("twitter")
   }
 
   def twitterOAuthConsumerKey: String = twitter.getString("oauth-consumer-key")
