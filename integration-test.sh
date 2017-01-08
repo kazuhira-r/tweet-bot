@@ -1,3 +1,3 @@
 #!/bin/bash
 
-mvn integration-test -P it
+mvn integration-test
