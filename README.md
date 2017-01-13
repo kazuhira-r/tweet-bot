@@ -7,9 +7,9 @@ To use it, package it in WAR and deploy it, or run standalone with WildFly Swarm
 
 * [Scala](https://www.scala-lang.org/)
 * [Java EE (CDI / JAX-RS)](http://www.oracle.com/technetwork/java/javaee/overview/index.html)
-* [Apache DeltaSpike](https://deltaspike.apache.org/)
+* [Apache DeltaSpike (Configuration / ProjectStage / Scheduler)](https://deltaspike.apache.org/)
 * [Twitter4j](http://twitter4j.org/)
-* [Infinispan](http://infinispan.org/)
+* [Infinispan (Persistence / CacheStore)](http://infinispan.org/)
 * [WildFly Swarm](http://wildfly-swarm.io/)
 
 *Note: WildFly Swarm is only used for standalone execution.*
