@@ -5,11 +5,20 @@ import java.time.format.DateTimeFormatter
 
 import org.littlewings.tweetbot.tweet.TweetSource
 
-case class Information(updateDate: LocalDate, linkUrl: String, updateContent: String) extends TweetSource {
+case class Information(updateDate: LocalDate, pcLinkUrl: String, spLinkUrl: String, updateContent: String) extends TweetSource {
   override def format: String =
-    s"""|[${updateDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))} オフィシャルサイト更新]
-        |${updateContent}
-        |
-       |${linkUrl}""".stripMargin
-
+    if (pcLinkUrl != spLinkUrl)
+      s"""|[${updateDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))} オフィシャルサイト更新]
+          |${updateContent}
+          |
+        |スマホ↓
+          |${spLinkUrl}
+          |
+        |PC↓
+          |${pcLinkUrl}""".stripMargin
+    else
+      s"""|[${updateDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))} オフィシャルサイト更新]
+          |${updateContent}
+          |
+          |${pcLinkUrl}""".stripMargin
 }

@@ -17,6 +17,18 @@ trait WebSiteInformationExtractService {
   def extract: Seq[Information]
 }
 
+object DefaultWebSiteInformationExtractService {
+  val devideUrlMap: Map[String, String] = Map(
+    "#information-head" -> "smp/index.html#info",
+    "#new-release" -> "smp/index.html#info",
+    "#media" -> "smp/media.html",
+    "#live" -> "smp/live.html",
+    "profile.html" -> "smp/profile.html",
+    "discography.html" -> "smp/discography.html",
+    "biography.html" -> "smp/biography.html"
+  ).withDefault(identity)
+}
+
 @Typed(Array(classOf[WebSiteInformationExtractService]))
 @ApplicationScoped
 class DefaultWebSiteInformationExtractService @Inject()(private[service] val caratInformationConfig: CaratInformationConfig)
@@ -35,13 +47,19 @@ class DefaultWebSiteInformationExtractService @Inject()(private[service] val car
       .map(span => span.text)
       .zip(updateContents.asScala.map(a => (a.attr("href"), a.text)))
       .map { case (date, (href, content)) =>
-        val absoluteLink =
-          if (href.startsWith("http"))
-            href
-          else if (href.startsWith("/"))
-            webSiteUrl + href.substring(1, href.length)
-          else
-            webSiteUrl + href
+        val (absolutePcLink, absoluteSpLink) =
+          if (href.startsWith("http")) {
+            (href, href)
+          } else {
+            val relative =
+              if (href.startsWith("/"))
+                href.substring(1, href.length)
+              else
+                href
+
+            val spLink = DefaultWebSiteInformationExtractService.devideUrlMap(relative)
+            (webSiteUrl + relative, webSiteUrl + spLink)
+          }
 
         val splittedDate = date.split("\\.")
         val (year, month, day) = (splittedDate(0), splittedDate(1), splittedDate(2))
@@ -52,7 +70,7 @@ class DefaultWebSiteInformationExtractService @Inject()(private[service] val car
             if (day.length < 2) "0" + day else day)
             .mkString(".")
 
-        Information(LocalDate.parse(revisedDate, DateTimeFormatter.ofPattern("yyyy.MM.dd")), absoluteLink, content)
+        Information(LocalDate.parse(revisedDate, DateTimeFormatter.ofPattern("yyyy.MM.dd")), absolutePcLink, absoluteSpLink, content)
       }.toVector
   }
 
