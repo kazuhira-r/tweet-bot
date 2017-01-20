@@ -1,13 +1,11 @@
 package org.littlewings.tweetbot.rest
 
-import javax.enterprise.context.ApplicationScoped
 import javax.ws.rs.core.{Context, MediaType, UriInfo}
 import javax.ws.rs.{GET, Path, Produces}
 
 import org.littlewings.tweetbot.LoggerSupport
 
 @Path("ping")
-@ApplicationScoped
 class PingResource extends LoggerSupport {
   @GET
   @Produces(Array(MediaType.TEXT_PLAIN))
