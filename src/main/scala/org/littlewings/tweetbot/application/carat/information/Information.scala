@@ -11,7 +11,7 @@ case class Information(updateDate: LocalDate, pcLinkUrl: String, spLinkUrl: Stri
       s"""|[${updateDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))} オフィシャルサイト更新]
           |${updateContent}
           |
-        |スマホ↓
+        |スマートフォン↓
           |${spLinkUrl}
           |
         |PC↓

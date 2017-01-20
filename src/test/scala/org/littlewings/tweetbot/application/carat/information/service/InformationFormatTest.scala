@@ -21,7 +21,7 @@ class InformationFormatTest extends ScalaTestJUnitTestSupport {
       s"""|[2016.08.23 オフィシャルサイト更新]
           |テストコンテンツが更新されました。
           |
-          |スマホ↓
+          |スマートフォン↓
           |http://localhost/smp/index.html
           |
           |PC↓
