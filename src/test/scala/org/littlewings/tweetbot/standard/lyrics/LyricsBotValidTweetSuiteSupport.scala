@@ -9,7 +9,7 @@ object LyricsBotValidTweetSuiteSupport {
 }
 
 @RunWith(classOf[JUnitRunner])
-trait LyricsBotValidTweetSuiteSupport extends FunSpec with GivenWhenThen with Matchers {
+trait LyricsBotValidTweetSuiteSupport extends FunSuite with GivenWhenThen with Matchers {
   protected def validateFullLyrics(artistNameAlias: String): Unit = {
     Given(s"a artist[${artistNameAlias}]")
 
@@ -19,13 +19,13 @@ trait LyricsBotValidTweetSuiteSupport extends FunSpec with GivenWhenThen with Ma
       val formatted = l.format
 
       info("=================================================================")
-      Then(s"## album ${l.album}, track ${l.trackName}, size = ${formatted.size}")
+      Then(s"## album ${l.album}, track ${l.trackName}, size = ${formatted.length}")
       info("")
 
       info("\"lyrics\"")
       info(formatted)
 
-      formatted.size should be <= LyricsBotValidTweetSuiteSupport.tweetMaxLength
+      formatted.length should be <= LyricsBotValidTweetSuiteSupport.tweetMaxLength
 
       info(s"## album ${l.album}, track ${l.trackName} OK!!")
       info("")
