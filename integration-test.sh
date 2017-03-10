@@ -1,3 +1,3 @@
 #!/bin/bash
 
-mvn integration-test
+mvn verify
