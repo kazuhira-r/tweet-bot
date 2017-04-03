@@ -3,10 +3,12 @@ package org.littlewings.tweetbot.standard.lyrics.cachestore
 import java.util.UUID
 
 import org.infinispan.commons.configuration.ConfiguredBy
+import org.infinispan.commons.persistence.Store
 import org.infinispan.persistence.spi.InitializationContext
 import org.littlewings.tweetbot.cachestore.AutoReloadableInMemoryCacheStore
 import org.littlewings.tweetbot.standard.lyrics.{Lyrics, LyricsFactory}
 
+@Store
 @ConfiguredBy(classOf[LyricsCacheStoreConfiguration])
 class LyricsCacheStore extends AutoReloadableInMemoryCacheStore[String, Lyrics] {
   private[cachestore] var artistNameAlias: String = _
