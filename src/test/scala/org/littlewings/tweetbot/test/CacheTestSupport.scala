@@ -2,7 +2,7 @@ package org.littlewings.tweetbot.test
 
 import org.infinispan.configuration.global.GlobalConfigurationBuilder
 import org.infinispan.manager.{DefaultCacheManager, EmbeddedCacheManager}
-import org.junit.{After, Before}
+import org.junit.After
 
 trait CacheTestSupport {
   private var cacheManager: EmbeddedCacheManager = _
