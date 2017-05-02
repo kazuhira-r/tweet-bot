@@ -24,7 +24,7 @@
 
         <!-- Scala version -->
         <scala.major.version>2.12</scala.major.version>
-        <scala.version>${scala.major.version}.1</scala.version>
+        <scala.version>${scala.major.version}.2</scala.version>
 
         <!-- Java EE API version -->
         <javaee.api.version>7.0</javaee.api.version>
