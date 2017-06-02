@@ -32,7 +32,7 @@ trait ArquillianDeploymentSupport {
             .resolver
             .loadPomFromFile("pom.xml")
             .importRuntimeDependencies
-            .resolve("org.scalatest:scalatest_2.12:3.0.1")
+            .resolve("org.scalatest:scalatest_2.12:3.0.3")
             .withTransitivity
             .asFile: _*
         )
