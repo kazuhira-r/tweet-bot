@@ -30,7 +30,7 @@
         <javaee.api.version>7.0</javaee.api.version>
 
         <!-- WildFly Swarm version -->
-        <wildfly.swarm.version>2017.5.0</wildfly.swarm.version>
+        <wildfly.swarm.version>2017.6.0</wildfly.swarm.version>
 
         <!-- Apache DeltaSpike version -->
         <apache.deltaspike.version>1.8.0</apache.deltaspike.version>
@@ -54,18 +54,18 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.wildfly.swarm</groupId>
-                <artifactId>bom-all</artifactId>
-                <version>${wildfly.swarm.version}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-            <dependency>
                 <groupId>org.infinispan</groupId>
                 <artifactId>infinispan-bom</artifactId>
                 <version>${infinispan.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wildfly.swarm</groupId>
+                <artifactId>bom-all</artifactId>
+                <version>${wildfly.swarm.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
@@ -107,7 +107,6 @@
         <dependency>
             <groupId>org.infinispan</groupId>
             <artifactId>infinispan-core</artifactId>
-            <version>${infinispan.version}</version>
         </dependency>
 
         <dependency>
