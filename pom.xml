@@ -30,7 +30,7 @@
         <javaee.api.version>7.0</javaee.api.version>
 
         <!-- WildFly Swarm version -->
-        <wildfly.swarm.version>2017.8.1</wildfly.swarm.version>
+        <wildfly.swarm.version>2017.9.4</wildfly.swarm.version>
 
         <!-- Apache DeltaSpike version -->
         <apache.deltaspike.version>1.8.0</apache.deltaspike.version>
@@ -62,7 +62,7 @@
             </dependency>
             <dependency>
                 <groupId>org.wildfly.swarm</groupId>
-                <artifactId>bom-all</artifactId>
+                <artifactId>bom</artifactId>
                 <version>${wildfly.swarm.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
