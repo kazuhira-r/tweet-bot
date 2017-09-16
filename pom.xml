@@ -69,8 +69,8 @@
                 <groupId>org.wildfly.swarm</groupId>
                 <artifactId>bom</artifactId>
                 <version>${wildfly-swarm.version}</version>
-                <scope>import</scope>
                 <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
