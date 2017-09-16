@@ -23,9 +23,12 @@ trait ArquillianDeploymentSupport {
         .addPackages(true, "org.littlewings.tweetbot.config")
         .addPackages(true, "org.littlewings.tweetbot.producer")
         .addPackages(true, "org.littlewings.tweetbot.resource")
+        .addPackages(true, "org.littlewings.tweetbot.rest")
         .addPackages(true, "org.littlewings.tweetbot.standard")
         .addPackages(true, "org.littlewings.tweetbot.tweet")
         .addAsResource(new File("src/main/resources"), "")
+        .addAsResource(new File("target/classes/application-build-info.properties"), "application-build-info.properties")
+        .addAsResource(new File("target/classes/git.properties"), "git.properties")
         .addAsResource(new StringAsset("org.apache.deltaspike.ProjectStage=Development"), "META-INF/apache-deltaspike.properties")
         .addAsLibraries(
           Maven
