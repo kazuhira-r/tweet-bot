@@ -1,3 +1,3 @@
 #!/bin/bash
 
-mvn package -DskipTests=true
+mvn package -P swarm-packaging -DskipTests=true
