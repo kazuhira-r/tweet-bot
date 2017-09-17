@@ -9,7 +9,7 @@ import javax.ws.rs.{ApplicationPath, Path}
 
 import io.undertow.server.HttpHandler
 import io.undertow.servlet.Servlets
-import io.undertow.servlet.api.ServletContainerInitializerInfo
+import io.undertow.servlet.api.{DeploymentInfo, ServletContainerInitializerInfo}
 import io.undertow.servlet.util.DefaultClassIntrospector
 import io.undertow.{Handlers, Undertow}
 import org.jboss.resteasy.cdi.CdiInjectorFactory
@@ -19,6 +19,7 @@ import org.littlewings.tweetbot.resource.Managed
 import org.reflections.Reflections
 
 object JaxrsServerTestSupport {
+  val DeploymentName: String = "tweet-bot-test-jaxrs-server"
   val DefaultHost: String = "localhost"
   val DefaultStartPort: Int = 8080
   val DefaultPortRange: Int = 100
@@ -38,18 +39,7 @@ class JaxrsServerTestSupport extends ScalaTestJUnitTestSupport {
   protected def withServer(host: String, startPort: Int, contextPath: String)(fun: JaxrsServer => Unit): Unit = {
     val port = findPort(host, startPort, JaxrsServerTestSupport.DefaultPortRange)
 
-    val deployment =
-      Servlets
-        .deployment
-        .setClassLoader(getClass.getClassLoader)
-        .setContextPath(contextPath)
-        .setDeploymentName("tweet-bot-test-jaxrs-server")
-        .addInitParameter("resteasy.injector.factory", classOf[CdiInjectorFactory].getName)
-        .addServletContainerInitalizer(new ServletContainerInitializerInfo(classOf[ResteasyServletInitializer],
-          DefaultClassIntrospector.INSTANCE.createInstanceFactory(classOf[ResteasyServletInitializer]),
-          findJaxrsClasses))
-        .addListener(Servlets.listener(classOf[Listener]))
-
+    val deployment = createDeployment(contextPath)
     val manager = Servlets.defaultContainer.addDeployment(deployment)
     manager.deploy()
 
@@ -73,6 +63,18 @@ class JaxrsServerTestSupport extends ScalaTestJUnitTestSupport {
       server.stop()
     }
   }
+
+  protected def createDeployment(contextPath: String): DeploymentInfo =
+    Servlets
+      .deployment
+      .setClassLoader(getClass.getClassLoader)
+      .setContextPath(contextPath)
+      .setDeploymentName(JaxrsServerTestSupport.DeploymentName)
+      .addInitParameter("resteasy.injector.factory", classOf[CdiInjectorFactory].getName)
+      .addServletContainerInitalizer(new ServletContainerInitializerInfo(classOf[ResteasyServletInitializer],
+        DefaultClassIntrospector.INSTANCE.createInstanceFactory(classOf[ResteasyServletInitializer]),
+        findJaxrsClasses))
+      .addListener(Servlets.listener(classOf[Listener]))
 
   protected def injectedBean[T <: AnyRef](targetClass: Class[T], annotations: Array[Annotation] = Array.empty): T =
     CDI.current.select[T](targetClass, annotations: _*).get
