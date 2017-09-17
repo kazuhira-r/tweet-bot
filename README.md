@@ -10,6 +10,7 @@ To use it, package it in WAR and deploy it, or run standalone with WildFly Swarm
 * [Apache DeltaSpike (Configuration / ProjectStage / Scheduler)](https://deltaspike.apache.org/)
 * [Twitter4j](http://twitter4j.org/)
 * [Infinispan (Persistence / CacheStore)](http://infinispan.org/)
+* [Jasypt](http://www.jasypt.org/)
 * [WildFly Swarm](http://wildfly-swarm.io/)
 
 *Note: WildFly Swarm is only used for standalone execution.*

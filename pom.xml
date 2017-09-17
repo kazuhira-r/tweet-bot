@@ -41,6 +41,7 @@
         <!-- Compile and Runtime libraries version-->
         <infinispan.version>9.1.0.Final</infinispan.version>
         <jackson2.version>2.7.9</jackson2.version>
+        <jasypt.version>1.9.2</jasypt.version>
         <jsoup.version>1.10.3</jsoup.version>
         <quartz.version>2.3.0</quartz.version>
         <scala-arm.version>2.0</scala-arm.version>
@@ -189,6 +190,11 @@
                     <artifactId>scala-library</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.jasypt</groupId>
+            <artifactId>jasypt</artifactId>
+            <version>${jasypt.version}</version>
         </dependency>
 
         <!-- for Test -->
