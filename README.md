@@ -12,6 +12,7 @@ To use it, package it in WAR and deploy it, or run standalone with WildFly Swarm
 * [Infinispan (Persistence / CacheStore)](http://infinispan.org/)
 * [Jasypt](http://www.jasypt.org/)
 * [WildFly Swarm](http://wildfly-swarm.io/)
+* [Maven Git Commit Id Plugin](https://github.com/ktoso/maven-git-commit-id-plugin)
 
 *Note: WildFly Swarm is only used for standalone execution.*
 
