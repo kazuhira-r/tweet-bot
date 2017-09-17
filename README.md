@@ -16,14 +16,6 @@ To use it, package it in WAR and deploy it, or run standalone with WildFly Swarm
 
 ## build or execute
 
-### run from IDE
-Please use the following class.
-```shellscript
-src/launcher/scala/org/littlewings/tweetbot/App.scala
-```
-
-*Note: applied "-Dorg.apache.deltaspike.ProjectStage=Development"*
-
 ### execute (using WildFly Swarm)
 ```shellscript
 $ ./run-development.sh
