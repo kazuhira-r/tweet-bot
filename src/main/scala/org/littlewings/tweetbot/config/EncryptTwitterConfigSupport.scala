@@ -6,7 +6,7 @@ object EncryptTwitterConfigSupport {
   val DisabledEncrypt: Boolean =
     java.lang.Boolean.parseBoolean(System.getenv("TWEET_BOT_DISABLE_ENCRYPT_TWITTER_CONFIG"))
 
-  val EncryptPassword: String = System.getenv("TWEET_BOT_TWITTER_ENTRYPT_PASSWORD")
+  val EncryptPassword: String = System.getenv("TWEET_BOT_TWITTER_ENCRYPT_PASSWORD")
 }
 
 trait EncryptTwitterConfigSupport extends TwitterConfigSupport {
