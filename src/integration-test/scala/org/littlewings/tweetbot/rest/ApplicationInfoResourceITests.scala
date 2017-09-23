@@ -15,6 +15,7 @@ class ApplicationInfoResourceITests extends JaxrsServerTestSupport {
         response <- Managed(client.target(server.withUrl("/info")).request.get)
       } {
         val map = response.readEntity(classOf[java.util.Map[String, AnyRef]])
+        map.containsKey("currentTime") should be(true)
         map.containsKey("applicationBuildTime") should be(true)
         map.containsKey("gitBuildTime") should be(true)
         map.containsKey("gitCommitId") should be(true)

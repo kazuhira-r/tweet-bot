@@ -1,5 +1,6 @@
 package org.littlewings.tweetbot.rest
 
+import java.time.LocalDateTime
 import javax.enterprise.context.ApplicationScoped
 import javax.inject.Inject
 import javax.ws.rs.core.MediaType
@@ -18,6 +19,7 @@ class ApplicationInfoResource @Inject()(archiveManifest: ApplicationBuildInfo, g
   @Produces(Array(MediaType.APPLICATION_JSON))
   def info: mutable.Map[String, AnyRef] =
     mutable.LinkedHashMap[String, AnyRef](
+      "currentTime" -> LocalDateTime.now.toString,
       "applicationBuildTime" -> archiveManifest.builtTime,
       "gitBuildTime" -> gitProperties.gitCommitTime,
       "gitCommitId" -> gitProperties.gitCommitId,
