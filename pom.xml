@@ -91,6 +91,7 @@
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
             <version>${scala.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -104,11 +105,13 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.infinispan</groupId>
             <artifactId>infinispan-core</artifactId>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -153,16 +156,19 @@
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>${jsoup.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
             <version>${quartz.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.jsuereth</groupId>
             <artifactId>scala-arm_${scala-major.version}</artifactId>
             <version>${scala-arm.version}</version>
+            <scope>compile</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.scala-lang</groupId>
@@ -174,16 +180,19 @@
             <groupId>org.twitter4j</groupId>
             <artifactId>twitter4j-core</artifactId>
             <version>${twitter4j.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.typesafe</groupId>
             <artifactId>config</artifactId>
             <version>${typesafe-config.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-scala_${scala-major.version}</artifactId>
             <version>${jackson2.version}</version>
+            <scope>compile</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.scala-lang</groupId>
@@ -195,6 +204,7 @@
             <groupId>org.jasypt</groupId>
             <artifactId>jasypt</artifactId>
             <version>${jasypt.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- for Test -->
