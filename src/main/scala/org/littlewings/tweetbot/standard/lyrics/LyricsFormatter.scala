@@ -7,7 +7,7 @@ trait LyricsFormatter extends Serializable {
 @SerialVersionUID(1L)
 class StandardLyricsFormatter extends LyricsFormatter {
   override def format(tweetLyrics: Lyrics): String =
-    if (tweetLyrics.mediaType == "digital-single")
+    if (tweetLyrics.mediaType == "digital-single" || tweetLyrics.mediaType == "self-produced-single")
       s"""|${tweetLyrics.lyrics.substring(1)}
           |
           |[${tweetLyrics.trackName}]""".stripMargin
