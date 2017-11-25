@@ -51,7 +51,7 @@
 
         <!-- Test libraries version-->
         <junit.version>4.12</junit.version>
-        <mockito.version>2.11.0</mockito.version>
+        <mockito.version>2.12.0</mockito.version>
         <reflections.version>0.9.11</reflections.version>
         <resteasy.version>3.0.19.Final</resteasy.version>
         <scalatest.version>3.0.4</scalatest.version>
