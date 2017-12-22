@@ -33,7 +33,7 @@
         <javaee-api.version>7.0</javaee-api.version>
 
         <!-- WildFly Swarm version -->
-        <wildfly-swarm.version>2017.11.0</wildfly-swarm.version>
+        <wildfly-swarm.version>2017.12.1</wildfly-swarm.version>
 
         <!-- Apache DeltaSpike version -->
         <apache-deltaspike.version>1.8.0</apache-deltaspike.version>
