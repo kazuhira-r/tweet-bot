@@ -36,7 +36,7 @@
         <wildfly-swarm.version>2018.1.0</wildfly-swarm.version>
 
         <!-- Apache DeltaSpike version -->
-        <apache-deltaspike.version>1.8.0</apache-deltaspike.version>
+        <apache-deltaspike.version>1.8.1</apache-deltaspike.version>
 
         <!-- Compile and Runtime libraries version-->
         <infinispan.version>9.1.5.Final</infinispan.version>
