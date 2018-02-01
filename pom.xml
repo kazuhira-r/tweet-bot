@@ -56,7 +56,7 @@
         <resteasy.version>3.0.19.Final</resteasy.version>
         <scalatest.version>3.0.5</scalatest.version>
         <undertow.version>1.4.22.Final</undertow.version>
-        <weld.version>2.4.5.Final</weld.version>
+        <weld.version>2.4.6.Final</weld.version>
     </properties>
 
     <dependencyManagement>
