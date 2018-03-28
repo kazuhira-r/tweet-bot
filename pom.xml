@@ -39,7 +39,7 @@
         <apache-deltaspike.version>1.8.1</apache-deltaspike.version>
 
         <!-- Compile and Runtime libraries version-->
-        <infinispan.version>9.2.0.Final</infinispan.version>
+        <infinispan.version>9.2.1.Final</infinispan.version>
         <jackson2.version>2.7.9</jackson2.version>
         <jasypt.version>1.9.2</jasypt.version>
         <jsoup.version>1.11.2</jsoup.version>
