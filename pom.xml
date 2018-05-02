@@ -55,7 +55,7 @@
         <reflections.version>0.9.11</reflections.version>
         <resteasy.version>3.1.4.Final</resteasy.version>
         <scalatest.version>3.0.5</scalatest.version>
-        <undertow.version>1.4.22.Final</undertow.version>
+        <undertow.version>1.4.24.Final</undertow.version>
         <weld.version>2.4.6.Final</weld.version>
     </properties>
 
