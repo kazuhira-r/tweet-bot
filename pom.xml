@@ -46,7 +46,8 @@
         <quartz.version>2.3.0</quartz.version>
         <scala-arm.version>2.0</scala-arm.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <twitter4j.version>4.0.6</twitter4j.version>
+        <twitter4j-v2.version>1.4.2</twitter4j-v2.version>
+        <twitter4j.version>4.0.7</twitter4j.version>
         <typesafe-config.version>1.3.3</typesafe-config.version>
 
         <!-- Test libraries version-->
@@ -174,6 +175,12 @@
                     <artifactId>scala-library</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.github.takke</groupId>
+            <artifactId>jp.takke.twitter4j-v2</artifactId>
+            <version>${twitter4j-v2.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.twitter4j</groupId>
