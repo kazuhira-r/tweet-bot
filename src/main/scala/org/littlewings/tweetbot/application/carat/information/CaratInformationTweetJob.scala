@@ -8,8 +8,8 @@ import org.littlewings.tweetbot.LoggerSupport
 import org.littlewings.tweetbot.application.carat.information.service.{CaratInformationTweetService, InformationUpdatedSearchService, WebSiteInformationExtractService}
 import org.quartz.{Job, JobExecutionContext}
 
-@Scheduled(cronExpression = "{carat.information.tweet.schedule}", onStartup = false)
-@ApplicationScoped
+//@Scheduled(cronExpression = "{carat.information.tweet.schedule}", onStartup = false)
+//@ApplicationScoped
 class CaratInformationTweetJob extends Job with LoggerSupport {
   @Inject
   private[information] var webSiteInformationExtractService: WebSiteInformationExtractService = _

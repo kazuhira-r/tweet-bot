@@ -8,8 +8,8 @@ import org.littlewings.tweetbot.LoggerSupport
 import org.littlewings.tweetbot.application.carat.lyrics.service.CaratLyricsTweetService
 import org.quartz.{Job, JobExecutionContext}
 
-@Scheduled(cronExpression = "{carat.lyrics.tweet.schedule}", onStartup = false)
-@ApplicationScoped
+//@Scheduled(cronExpression = "{carat.lyrics.tweet.schedule}", onStartup = false)
+//@ApplicationScoped
 class CaratLyricsTweetJob extends Job with LoggerSupport {
   @Inject
   private[lyrics] var caratLyricsTweetService: CaratLyricsTweetService = _
